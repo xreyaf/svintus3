@@ -1,32 +1,21 @@
 import { AddIcon, CheckIcon, MinusIcon } from '@chakra-ui/icons';
 import {
   Avatar,
-  Button,
   ButtonGroup,
   Card,
   CardBody,
   CardHeader,
   Flex,
   IconButton,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Stat,
-  StatLabel,
-  StatNumber,
-  useDisclosure,
+  Text,
 } from '@chakra-ui/react';
 import { Heading } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { cloneDeep, isEqual } from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
 
 import {
   decrement,
@@ -47,30 +36,16 @@ const Counter = ({ name }: ICounterProp) => {
   const count = useSelector((state: ICounterState) => selectCount(name)(state));
   const dispatch = useDispatch();
   const toast = useToast();
-  const { isOpen, onToggle, onClose } = useDisclosure();
-
+  const [isLoading, setIsLoading] = useState(false);
   const countersRef = doc(firestore, '/counters', 'm8QSBnn81U6SV78BAR1i');
 
   const formattedName = name.replace('counter', '');
 
-  const countTitles = ['очко', 'очка', 'очков'];
-  const getFormattedCount = (number: number, titles: string[]) => {
-    number = Math.abs(number);
-    let cases;
-    if (Number.isInteger(number)) {
-      cases = [2, 0, 1, 1, 1, 2];
-      return titles[
-        number % 100 > 4 && number % 100 < 20
-          ? 2
-          : cases[number % 10 < 5 ? number % 10 : 5]
-      ];
-    }
-    return titles[1];
-  };
+  const gradient =
+    'linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)';
 
   const fetchData = async () => {
     let prevData: ICounterState[];
-
     await getDocs(collection(firestore, '/counters')).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
       if (isEqual(prevData, newData)) {
@@ -87,6 +62,8 @@ const Counter = ({ name }: ICounterProp) => {
   };
 
   const submitForm = async (name: string, number: number) => {
+    setIsLoading(true);
+
     await updateDoc(countersRef, {
       [name]: number,
     }).catch((err) => {
@@ -99,12 +76,12 @@ const Counter = ({ name }: ICounterProp) => {
     });
     await fetchData();
 
-    onClose();
     toast({
       title: 'Данные обновлены',
       status: 'success',
       duration: 2000,
     });
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -114,37 +91,36 @@ const Counter = ({ name }: ICounterProp) => {
   return (
     <Card size="lg">
       <CardHeader>
-        <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+        <Flex flex="1" gap="4" flexDirection="column" alignItems="center" flexWrap="wrap">
           <Avatar size="xl" name={formattedName} src={calcAvatarUrl(formattedName)} />
           <Heading size="xl">{formattedName}</Heading>
         </Flex>
       </CardHeader>
 
-      <CardBody>
+      <CardBody pt="0">
         <Flex
           alignItems="center"
           justifyContent="center"
           flexDirection="column"
           flexWrap="wrap"
         >
-          <Stat
-            position="relative"
-            w="100%"
-            p="4"
-            mb="4"
-            alignItems="center"
-            border="4px"
-            borderColor="blackAlpha.50"
-            rounded="10"
-          >
-            <StatLabel>Количество очков:</StatLabel>
-            <StatNumber mt="1">{count}</StatNumber>
+          <Flex w="100%" alignItems="center" flexDirection="column">
             <ModalConfirmation
               name={name}
               formattedName={formattedName}
               onApprove={() => submitForm(name, 0)}
             />
-          </Stat>
+            <Text
+              flex="1"
+              bgGradient={gradient}
+              bgClip="text"
+              fontSize="8xl"
+              fontWeight="extrabold"
+              align="center"
+            >
+              {count}
+            </Text>
+          </Flex>
 
           <ButtonGroup w="100%">
             <IconButton
@@ -153,50 +129,27 @@ const Counter = ({ name }: ICounterProp) => {
               variant="ghost"
               aria-label="Decrement counter"
               icon={<MinusIcon />}
+              fontSize="2xl"
               onClick={() => dispatch(decrement(name)())}
             />
-            <Popover
-              returnFocusOnClose={false}
-              isOpen={isOpen}
-              onClose={onClose}
-              placement="top"
-              closeOnBlur={false}
-            >
-              <PopoverTrigger>
-                <IconButton
-                  p="5"
-                  flex="1"
-                  aria-label="Save counter"
-                  gap="2"
-                  variant="ghost"
-                  icon={<CheckIcon />}
-                  onClick={onToggle}
-                />
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverHeader fontWeight="semibold">Обновление данных</PopoverHeader>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverBody>
-                  У {formattedName} будет {count} {getFormattedCount(count, countTitles)}!
-                </PopoverBody>
-                <PopoverFooter display="flex" justifyContent="flex-end">
-                  <ButtonGroup size="sm">
-                    <Button variant="outline" onClick={onClose}>
-                      Отменить
-                    </Button>
-                    <Button colorScheme="green" onClick={() => submitForm(name, count)}>
-                      Сохранить
-                    </Button>
-                  </ButtonGroup>
-                </PopoverFooter>
-              </PopoverContent>
-            </Popover>
+            <IconButton
+              p="5"
+              flex="1"
+              aria-label="Save counter"
+              gap="2"
+              variant="ghost"
+              fontSize="2xl"
+              icon={<CheckIcon />}
+              isLoading={isLoading}
+              spinner={<BeatLoader color="gray" size={8} />}
+              onClick={() => submitForm(name, count)}
+            />
             <IconButton
               p="5"
               flex="1"
               aria-label="Increment counter"
               variant="ghost"
+              fontSize="2xl"
               icon={<AddIcon />}
               onClick={() => dispatch(increment(name)())}
             />

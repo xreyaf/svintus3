@@ -1,13 +1,20 @@
-import { Center, Container, Image, SimpleGrid } from '@chakra-ui/react';
+import { Center, Container, SimpleGrid, Text } from '@chakra-ui/react';
 
-import logo from './assets/logo.webp';
 import Counter from './components/Counter';
 
 function App(): JSX.Element {
   return (
-    <Container mb="6" maxW="90vw" as="main">
+    <Container maxW="90vw" as="main">
       <Center>
-        <Image src={logo} alt="logo" w="60vw" h="20vh" m="10" />
+        <Text
+          bgGradient="linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)"
+          bgClip="text"
+          fontSize="6xl"
+          fontWeight="extrabold"
+          m="10"
+        >
+          cвинтус
+        </Text>
       </Center>
 
       <SimpleGrid spacing={6} templateColumns="repeat(auto-fill, minmax(1, 1fr))">

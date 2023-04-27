@@ -41,12 +41,12 @@ const ModalConfirmation = ({
   return (
     <>
       <IconButton
-        top="0"
-        right="0"
-        position="absolute"
+        p="5"
+        w="20%"
         variant="ghost"
         colorScheme="gray"
-        aria-label="See menu"
+        aria-label="Reset counter"
+        fontSize="2xl"
         icon={<DeleteIcon />}
         onClick={() => {
           setOverlay(<Overlay />);
