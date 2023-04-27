@@ -1,4 +1,4 @@
-import { AddIcon, EditIcon, MinusIcon } from '@chakra-ui/icons';
+import { AddIcon, CheckIcon, MinusIcon } from '@chakra-ui/icons';
 import {
   Avatar,
   Button,
@@ -169,7 +169,7 @@ const Counter = ({ name }: ICounterProp) => {
                   aria-label="Save counter"
                   gap="2"
                   variant="ghost"
-                  icon={<EditIcon />}
+                  icon={<CheckIcon />}
                   onClick={onToggle}
                 />
               </PopoverTrigger>
