@@ -1,49 +1,23 @@
-import { Box, Flex, Image } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { Center, Container, Image, SimpleGrid } from '@chakra-ui/react';
 
 import logo from './assets/logo.webp';
 import Counter from './components/Counter';
 
-const bounceTransition = {
-  y: {
-    duration: 1,
-    yoyo: Infinity,
-    ease: 'easeOut',
-  },
-  backgroundColor: {
-    duration: 0,
-    yoyo: Infinity,
-    ease: 'easeOut',
-    repeatDelay: 0.8,
-  },
-};
-
 function App(): JSX.Element {
   return (
-    <Box>
-      <Flex
-        as="header"
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        h="100vh"
-        fontSize="3xl"
-      >
-        <motion.div
-          transition={bounceTransition}
-          animate={{
-            y: [20, 0],
-          }}
-        >
-          <Image src={logo} alt="" h="40vmin" />
-        </motion.div>
+    <Container maxW={'90vw'} as="main">
+      <Center>
+        <Image src={logo} alt="logo" w="60vw" h="20vh" m="10" />
+      </Center>
+
+      <SimpleGrid spacing={6} templateColumns="repeat(auto-fill, minmax(1, 1fr))">
         <Counter name="counterRoman" />
         <Counter name="counterElizabeth" />
         <Counter name="counterArseniy" />
         <Counter name="counterDmitriy" />
         <Counter name="counterOksana" />
-      </Flex>
-    </Box>
+      </SimpleGrid>
+    </Container>
   );
 }
 

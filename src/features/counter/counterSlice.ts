@@ -31,6 +31,11 @@ export const createGenericSlice = (sliceName: string) => {
       setState: (state, { payload }) => {
         state.value = payload;
       },
+      resetState: () => {
+        return {
+          ...initialState,
+        };
+      },
     },
   });
 };
@@ -43,6 +48,8 @@ export const incrementByAmount = (counterName: string) =>
   countersByName[counterName].actions.incrementByAmount;
 export const setState = (counterName: string) =>
   countersByName[counterName].actions.setState;
+export const resetState = (counterName: string) =>
+  countersByName[counterName].actions.resetState;
 
 export const selectCount =
   (counterName: string) => (state: { [x: string]: { value: number } }) =>
