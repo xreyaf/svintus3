@@ -1,7 +1,6 @@
 import { AddIcon, CheckIcon, MinusIcon, RepeatIcon } from '@chakra-ui/icons';
 import {
   Avatar,
-  Box,
   Button,
   ButtonGroup,
   Card,
@@ -127,44 +126,44 @@ const Counter = ({ name }: { name: string }) => {
       </CardHeader>
 
       <CardBody>
-        <Box align="center">
-          <Stat mb="4">
+        <Flex alignItems="center" justifyContent="center" flexWrap="wrap">
+          <Stat p="4" mb="4" alignItems="center" bg="blackAlpha.50" rounded={'10'}>
             <StatLabel>Количество очков:</StatLabel>
-            <StatNumber mt="1" w={'8rem'} bg="blackAlpha.100" rounded={'full'}>
-              {count}
-            </StatNumber>
+            <StatNumber mt="1">{count}</StatNumber>
           </Stat>
 
-          <IconButton
-            p="5"
-            flex="1"
-            variant="ghost"
-            aria-label="Decrement counter"
-            icon={<MinusIcon />}
-            onClick={() => dispatch(decrement(name)())}
-          />
-          <IconButton
-            p="5"
-            flex="1"
-            aria-label="Save counter"
-            gap="2"
-            icon={<CheckIcon />}
-            variant="ghost"
-            // onClick={() => submitForm(name, count)}
-            onClick={() => {
-              setOverlay(<OverlayTwo />);
-              onOpen();
-            }}
-          />
-          <IconButton
-            p="5"
-            flex="1"
-            aria-label="Increment counter"
-            variant="ghost"
-            icon={<AddIcon />}
-            onClick={() => dispatch(increment(name)())}
-          />
-        </Box>
+          <ButtonGroup>
+            <IconButton
+              p="5"
+              flex="1"
+              variant="ghost"
+              aria-label="Decrement counter"
+              icon={<MinusIcon />}
+              onClick={() => dispatch(decrement(name)())}
+            />
+            <IconButton
+              p="5"
+              flex="1"
+              aria-label="Save counter"
+              gap="2"
+              icon={<CheckIcon />}
+              variant="ghost"
+              // onClick={() => submitForm(name, count)}
+              onClick={() => {
+                setOverlay(<OverlayTwo />);
+                onOpen();
+              }}
+            />
+            <IconButton
+              p="5"
+              flex="1"
+              aria-label="Increment counter"
+              variant="ghost"
+              icon={<AddIcon />}
+              onClick={() => dispatch(increment(name)())}
+            />
+          </ButtonGroup>
+        </Flex>
       </CardBody>
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         {overlay}
