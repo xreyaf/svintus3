@@ -126,13 +126,26 @@ const Counter = ({ name }: { name: string }) => {
       </CardHeader>
 
       <CardBody>
-        <Flex alignItems="center" justifyContent="center" flexWrap="wrap">
-          <Stat p="4" mb="4" alignItems="center" bg="blackAlpha.50" rounded={'10'}>
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+          flexWrap="wrap"
+        >
+          <Stat
+            w="100%"
+            p="4"
+            mb="4"
+            alignItems="center"
+            border="2px"
+            borderColor="blackAlpha.50"
+            rounded={'10'}
+          >
             <StatLabel>Количество очков:</StatLabel>
             <StatNumber mt="1">{count}</StatNumber>
           </Stat>
 
-          <ButtonGroup>
+          <ButtonGroup w="100%">
             <IconButton
               p="5"
               flex="1"
@@ -172,7 +185,7 @@ const Counter = ({ name }: { name: string }) => {
           <ModalCloseButton />
           <ModalBody>
             <Text>
-              У {formattedName}будет {count} очков!
+              У {formattedName} будет {count} очков!
             </Text>
           </ModalBody>
           <ModalFooter>
