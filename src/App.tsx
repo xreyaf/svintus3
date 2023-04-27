@@ -5,7 +5,7 @@ import Counter from './components/Counter';
 
 function App(): JSX.Element {
   return (
-    <Container maxW={'90vw'} as="main">
+    <Container mb="6" maxW="90vw" as="main">
       <Center>
         <Image src={logo} alt="logo" w="60vw" h="20vh" m="10" />
       </Center>

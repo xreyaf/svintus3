@@ -4,6 +4,10 @@ interface ICounters {
   [key: string]: any;
 }
 
+export interface ICounterState {
+  [key: string]: { value: number };
+}
+
 const countersByName: ICounters = {};
 
 const initialState = {
@@ -19,9 +23,7 @@ export const createGenericSlice = (sliceName: string) => {
         state.value += 1;
       },
       decrement: (state) => {
-        if (state.value <= 0) {
-          state.value = 0;
-        } else state.value -= 1;
+        state.value -= 1;
       },
       incrementByAmount: (state, { payload }) => {
         if (state.value <= 0) {
@@ -51,9 +53,8 @@ export const setState = (counterName: string) =>
 export const resetState = (counterName: string) =>
   countersByName[counterName].actions.resetState;
 
-export const selectCount =
-  (counterName: string) => (state: { [x: string]: { value: number } }) =>
-    state[counterName].value;
+export const selectCount = (counterName: string) => (state: ICounterState) =>
+  state[counterName].value;
 
 const createCounter = (name: string) => {
   const slice = createGenericSlice(name);
