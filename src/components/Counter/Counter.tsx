@@ -37,7 +37,7 @@ const Counter = ({ name }: ICounterProp) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const countersRef = doc(firestore, '/counters', 'm8QSBnn81U6SV78BAR1i');
+  const countersRef = doc(firestore, '/counters', import.meta.env.VITE_FB_DOC_PATH);
 
   const formattedName = name.replace('counter', '');
 
@@ -45,6 +45,8 @@ const Counter = ({ name }: ICounterProp) => {
     'linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)';
 
   const fetchData = async () => {
+    setIsLoading(true);
+
     let prevData: ICounterState[];
     await getDocs(collection(firestore, '/counters')).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
@@ -59,6 +61,8 @@ const Counter = ({ name }: ICounterProp) => {
         dispatch(setState(index)(counters[0][index]));
       }
     });
+
+    setIsLoading(false);
   };
 
   const submitForm = async (name: string, number: number) => {
@@ -74,6 +78,7 @@ const Counter = ({ name }: ICounterProp) => {
         duration: 1500,
       });
     });
+
     await fetchData();
 
     toast({
@@ -118,7 +123,7 @@ const Counter = ({ name }: ICounterProp) => {
               fontWeight="extrabold"
               align="center"
             >
-              {count}
+              {isLoading ? '(⁠ᵔ⁠ᴥ⁠ᵔ⁠)' : count}
             </Text>
           </Flex>
 
