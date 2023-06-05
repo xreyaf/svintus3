@@ -33,14 +33,13 @@ interface ICounterProp {
 }
 
 const Counter = ({ name }: ICounterProp) => {
-  const count = useSelector((state: ICounterState) => selectCount(name)(state));
   const dispatch = useDispatch();
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const countersRef = doc(firestore, '/counters', import.meta.env.VITE_FB_DOC_PATH);
+  const count = useSelector((state: ICounterState) => selectCount(name)(state));
 
+  const countersRef = doc(firestore, '/counters', 'm8QSBnn81U6SV78BAR1i');
   const formattedName = name.replace('counter', '');
-
   const gradient =
     'linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)';
 
