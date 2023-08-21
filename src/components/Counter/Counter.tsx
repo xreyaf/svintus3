@@ -13,7 +13,7 @@ import { Heading } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { cloneDeep, isEqual } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 
@@ -26,7 +26,7 @@ import {
 } from '../../features/counter/counterSlice';
 import { firestore } from '../../lib/firebase';
 import ModalConfirmation from './ModalConfirmation';
-import { calcAvatarUrl } from './utils';
+import { getAvatarUrl, getRuLocale } from './utils';
 
 interface ICounterProp {
   name: string;
@@ -35,17 +35,15 @@ interface ICounterProp {
 const Counter = ({ name }: ICounterProp) => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const count = useSelector((state: ICounterState) => selectCount(name)(state));
 
   const countersRef = doc(firestore, '/counters', 'm8QSBnn81U6SV78BAR1i');
   const formattedName = name.replace('counter', '');
+  const ruLocaleName = getRuLocale(formattedName);
   const gradient =
     'linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)';
 
   const fetchData = async () => {
-    setIsLoading(true);
-
     let prevData: ICounterState[];
     await getDocs(collection(firestore, '/counters')).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
@@ -60,13 +58,9 @@ const Counter = ({ name }: ICounterProp) => {
         dispatch(setState(index)(counters[0][index]));
       }
     });
-
-    setIsLoading(false);
   };
 
   const submitForm = async (name: string, number: number) => {
-    setIsLoading(true);
-
     await updateDoc(countersRef, {
       [name]: number,
     }).catch((err) => {
@@ -85,7 +79,6 @@ const Counter = ({ name }: ICounterProp) => {
       status: 'success',
       duration: 2000,
     });
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -96,11 +89,10 @@ const Counter = ({ name }: ICounterProp) => {
     <Card size="lg">
       <CardHeader>
         <Flex flex="1" gap="4" flexDirection="column" alignItems="center" flexWrap="wrap">
-          <Avatar size="xl" name={formattedName} src={calcAvatarUrl(formattedName)} />
-          <Heading size="xl">{formattedName}</Heading>
+          <Avatar size="xl" name={formattedName} src={getAvatarUrl(formattedName)} />
+          <Heading size="xl">{ruLocaleName}</Heading>
         </Flex>
       </CardHeader>
-
       <CardBody pt="0">
         <Flex
           alignItems="center"
@@ -111,7 +103,7 @@ const Counter = ({ name }: ICounterProp) => {
           <Flex w="100%" alignItems="center" flexDirection="column">
             <ModalConfirmation
               name={name}
-              formattedName={formattedName}
+              formattedName={ruLocaleName}
               onApprove={() => submitForm(name, 0)}
             />
             <Text
@@ -122,7 +114,7 @@ const Counter = ({ name }: ICounterProp) => {
               fontWeight="extrabold"
               align="center"
             >
-              {isLoading ? '(⁠ᵔ⁠ᴥ⁠ᵔ⁠)' : count}
+              {count}
             </Text>
           </Flex>
 
@@ -144,7 +136,6 @@ const Counter = ({ name }: ICounterProp) => {
               variant="ghost"
               fontSize="2xl"
               icon={<CheckIcon />}
-              isLoading={isLoading}
               spinner={<BeatLoader color="gray" size={8} />}
               onClick={() => submitForm(name, count)}
             />

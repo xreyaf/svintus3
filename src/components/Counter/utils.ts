@@ -1,4 +1,4 @@
-export const calcAvatarUrl = (name: string) => {
+export const getAvatarUrl = (name: string) => {
   switch (name) {
     case 'Roman':
       return import.meta.env.VITE_PIC_ROMA_URL;
@@ -10,6 +10,23 @@ export const calcAvatarUrl = (name: string) => {
       return import.meta.env.VITE_PIC_DIMA_URL;
     case 'Oksana':
       return import.meta.env.VITE_PIC_OKS_URL;
+    default:
+      return '';
+  }
+};
+
+export const getRuLocale = (name: string) => {
+  switch (name) {
+    case 'Roman':
+      return 'Ромка';
+    case 'Elizabeth':
+      return 'Лизок';
+    case 'Arseniy':
+      return 'Арсюшка';
+    case 'Dmitriy':
+      return 'Димка';
+    case 'Oksana':
+      return 'Оксик';
     default:
       return '';
   }
