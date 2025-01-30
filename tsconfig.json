@@ -40,6 +40,6 @@
   ],
   "exclude": [
     "./node_modules",
-    "./src/shared"
+    "./src/shared/ui/*"
   ]
 }

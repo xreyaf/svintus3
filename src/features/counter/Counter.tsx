@@ -94,11 +94,13 @@ const CounterContent = ({ name }: ICounterProp) => {
             <LuMinus />
           </Button>
           <DialogRoot size="sm" placement="bottom" lazyMount>
+            {/* @ts-ignore */}
             <DialogTrigger asChild>
               <Button variant="subtle" colorPalette="black" flex="1">
                 <LuTrash />
               </Button>
             </DialogTrigger>
+            {/* @ts-ignore */}
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Точно хотите обнулить {ruAccusativeName}?</DialogTitle>
