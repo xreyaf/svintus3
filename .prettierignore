@@ -1,6 +1,6 @@
+# Add files here to ignore them from prettier formatting
 node_modules
 .DS_Store
 dist
 dist-ssr
 *.local
-node_modules/*
