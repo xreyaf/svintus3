@@ -56,5 +56,4 @@ export const getClearVerbForm = (name: string) => {
   } else if (femaleNames.includes(name)) {
     return 'обнулилась'
   }
-  return 'обнулился(ась)'
 }
