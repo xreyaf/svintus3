@@ -102,15 +102,17 @@ const CounterContent = ({ name }: ICounterProp) => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Точно хотите обнулить {ruAccusativeName}?</DialogTitle>
+                <DialogTitle>Хотите обнулить {ruAccusativeName}?</DialogTitle>
               </DialogHeader>
 
               <DialogFooter>
                 <DialogActionTrigger asChild>
-                  <Button variant="outline">Нет</Button>
+                  <Button colorPalette="red" minW={160}>
+                    Не хочу
+                  </Button>
                 </DialogActionTrigger>
-                <Button colorPalette="blue" onClick={handleClearCount}>
-                  Да
+                <Button colorPalette="blue" variant="outline" onClick={handleClearCount} minW={100}>
+                  Туда
                 </Button>
               </DialogFooter>
               <DialogCloseTrigger />
