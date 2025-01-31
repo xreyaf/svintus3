@@ -17,8 +17,8 @@ function Home() {
     <>
       <Container as="main" flex={1}>
         <Suspense fallback={<Spinner />}>
-          <Stack p={10} gap="4" direction="row" wrap="wrap">
-            <Center w={400} p={4} borderRadius={16} bg="bg.muted" flex="auto">
+          <Stack p={4} gap="4" direction="row" wrap="wrap">
+            <Center p={4} borderRadius={16} bg="bg.muted" flex="auto">
               <Heading
                 bgGradient="linear-gradient(315deg, hsla(211, 96%, 62%, 1) 0%, hsla(295, 94%, 76%, 1) 100%)"
                 bgClip="text"
