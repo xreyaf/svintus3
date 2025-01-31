@@ -91,7 +91,7 @@ const CounterContent = ({ name }: ICounterProp) => {
       </Card.Body>
       <Card.Footer>
         <ButtonGroup w="100%">
-          <Button variant="subtle" colorPalette="red" flex="1" onClick={handleDecrementCount}>
+          <Button variant="subtle" colorPalette="blue" flex="1" onClick={handleDecrementCount}>
             <LuMinus />
           </Button>
           <DialogRoot size="sm" placement="bottom" lazyMount>
@@ -109,7 +109,7 @@ const CounterContent = ({ name }: ICounterProp) => {
                 <DialogActionTrigger asChild>
                   <Button variant="outline">Нет</Button>
                 </DialogActionTrigger>
-                <Button colorPalette="red" onClick={handleClearCount}>
+                <Button colorPalette="blue" onClick={handleClearCount}>
                   Да
                 </Button>
               </DialogFooter>
