@@ -20,7 +20,7 @@ export const getRuLocale = (name: string, caseType: 'nominative' | 'accusative' 
     case 'Elizabeth':
       return caseType === 'accusative' ? 'Лизку' : caseType === 'dative' ? 'Лизке' : 'Лизок'
     case 'Arseniy':
-      return caseType === 'accusative' ? 'Асюшку' : caseType === 'dative' ? 'Асюшке' : 'Арсюшка'
+      return caseType === 'accusative' ? 'Арсюшку' : caseType === 'dative' ? 'Арсюшке' : 'Арсюшка'
     case 'Dmitriy':
       return caseType === 'accusative' ? 'Димку' : caseType === 'dative' ? 'Димке' : 'Димка'
     case 'Oksana':
