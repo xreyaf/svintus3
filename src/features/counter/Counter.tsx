@@ -111,9 +111,11 @@ const CounterContent = ({ name }: ICounterProp) => {
                     Не хочу
                   </Button>
                 </DialogActionTrigger>
-                <Button colorPalette="blue" variant="outline" onClick={handleClearCount} minW={100}>
-                  Туда
-                </Button>
+                <DialogActionTrigger>
+                  <Button colorPalette="blue" variant="outline" onClick={handleClearCount} minW={100}>
+                    Туда
+                  </Button>
+                </DialogActionTrigger>
               </DialogFooter>
               <DialogCloseTrigger />
             </DialogContent>
