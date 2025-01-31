@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: './dist',
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
   },
@@ -8,7 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: 'firebasestorage.googleapis.com',
-        pathname: '**',
+        pathname: '/v0/b/**',
         port: '',
         protocol: 'https',
       },
