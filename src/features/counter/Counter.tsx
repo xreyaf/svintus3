@@ -45,6 +45,7 @@ const CounterContent = ({ name }: ICounterProp) => {
     toaster.create({
       title: `Прибавили очко ${getRuLocale(formattedName, 'dative')}`,
       overlap: true,
+      type: 'info',
       duration: 1500,
     })
   }
@@ -104,7 +105,6 @@ const CounterContent = ({ name }: ICounterProp) => {
               <DialogHeader>
                 <DialogTitle>Хотите обнулить {ruAccusativeName}?</DialogTitle>
               </DialogHeader>
-
               <DialogFooter>
                 <DialogActionTrigger asChild>
                   <Button colorPalette="red" minW={160}>
