@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { useState } from 'react'
 import { ConversationMessage, ConversationMessages } from '@/lib/chatCompletionModel'
 import {
   Button,
@@ -9,7 +9,6 @@ import {
   Flex,
   HStack,
   Link,
-  Spinner,
   Stack,
   Text,
   Box,
@@ -77,78 +76,76 @@ const Component = () => {
             SSE LLM Stream With Gemini
           </Heading>
         </Center>
-        <Suspense fallback={<Spinner />}>
-          <Flex h="80vh" py={4}>
-            <Flex
-              flexDirection="column"
-              w="5xl"
-              m="auto"
-              h="full"
-              borderWidth="2px"
-              rounded="lg"
-              overflow="hidden"
+        <Flex h="80vh" py={4}>
+          <Flex
+            flexDirection="column"
+            w="5xl"
+            m="auto"
+            h="full"
+            borderWidth="2px"
+            rounded="lg"
+            overflow="hidden"
+          >
+            <Stack
+              px={4}
+              py={4}
+              overflowY="auto"
+              flex={1}
+              gap={4}
+              bg="black"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '4px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#d5e3f7',
+                  borderRadius: '24px',
+                },
+              }}
             >
-              <Stack
-                px={4}
-                py={4}
-                overflowY="auto"
-                flex={1}
-                gap={4}
-                bg="black"
-                css={{
-                  '&::-webkit-scrollbar': {
-                    width: '4px',
-                  },
-                  '&::-webkit-scrollbar-thumb': {
-                    background: '#d5e3f7',
-                    borderRadius: '24px',
-                  },
-                }}
-              >
-                {messages.map((msg, index) => (
-                  <Box
-                    key={index}
-                    alignSelf={msg.role === 'user' ? 'flex-end' : 'flex-start'}
-                    bg={msg.role === 'user' ? 'blue.300' : 'purple.300'}
-                    color="black"
-                    px={4}
-                    py={2}
-                    borderRadius="lg"
-                    maxW="80%"
-                  >
-                    <Text fontSize="sm">{msg.content}</Text>
-                  </Box>
-                ))}
-                {latestMessage && (
-                  <Box
-                    bg="gray.200"
-                    px={4}
-                    py={2}
-                    borderRadius="lg"
-                    alignSelf="flex-start"
-                    maxW="80%"
-                  >
-                    <Text fontSize="sm">{latestMessage}</Text>
-                  </Box>
-                )}
-              </Stack>
-
-              <HStack p={4} bg="gray.100">
-                <Textarea
-                  bg="white"
+              {messages.map((msg, index) => (
+                <Box
+                  key={index}
+                  alignSelf={msg.role === 'user' ? 'flex-end' : 'flex-start'}
+                  bg={msg.role === 'user' ? 'blue.300' : 'purple.300'}
                   color="black"
-                  placeholder="Enter your message..."
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') void handleSend()
-                  }}
-                />
-                <Button onClick={handleSend}>Send</Button>
-              </HStack>
-            </Flex>
+                  px={4}
+                  py={2}
+                  borderRadius="lg"
+                  maxW="80%"
+                >
+                  <Text fontSize="sm">{msg.content}</Text>
+                </Box>
+              ))}
+              {latestMessage && (
+                <Box
+                  bg="gray.200"
+                  px={4}
+                  py={2}
+                  borderRadius="lg"
+                  alignSelf="flex-start"
+                  maxW="80%"
+                >
+                  <Text fontSize="sm">{latestMessage}</Text>
+                </Box>
+              )}
+            </Stack>
+
+            <HStack p={4} bg="gray.100">
+              <Textarea
+                bg="white"
+                color="black"
+                placeholder="Enter your message..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') void handleSend()
+                }}
+              />
+              <Button onClick={handleSend}>Send</Button>
+            </HStack>
           </Flex>
-        </Suspense>
+        </Flex>
       </Container>
 
       <Container as="footer" py={4}>
