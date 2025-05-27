@@ -1,12 +1,17 @@
 import { gql } from '@apollo/client'
 
 export const GET_TODOS = gql`
+  fragment TodoDetails on Todo {
+    id
+    title
+    completed
+  }
+
   query GetTodos {
     todos {
-      id
-      title
-      completed
+      ...TodoDetails
     }
+    poops
   }
 `
 
@@ -34,6 +39,16 @@ export const DELETE_TODO = gql`
   mutation DeleteTodo($id: Int!) {
     deleteTodo(id: $id) {
       id
+    }
+  }
+`
+
+export const GET_TODO_WITH_CONDITION = gql`
+  query getTodoWithCondition($includeCompleted: Boolean!) {
+    todoById(id: 2) {
+      id
+      title
+      completed @include(if: $includeCompleted)
     }
   }
 `

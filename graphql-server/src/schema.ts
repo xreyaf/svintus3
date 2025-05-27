@@ -1,20 +1,20 @@
 export const typeDefs = `
   type Todo {
-    userId: Int
-    id: Int
+    id: ID!
     title: String
     completed: Boolean
+    deprecatedField: String @deprecated(reason: "Use newArg")
   }
 
   type Query {
     todos: [Todo]
-    todoById(id: Int!): Todo
+    todoById(id: ID!): Todo
   }
 
   type Mutation {
     createTodo(title: String!, completed: Boolean!): Todo
-    updateTodo(id: Int!, title: String, completed: Boolean): Todo
-    deleteTodo(id: Int!): Todo
+    updateTodo(id: ID!, title: String, completed: Boolean): Todo
+    deleteTodo(id: ID!): Todo
   }
 `
 

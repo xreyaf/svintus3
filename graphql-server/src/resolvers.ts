@@ -1,4 +1,3 @@
-// resolvers.ts
 import { todos } from './schema.js'
 
 let todoIdCounter = 10
